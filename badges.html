@@ -4,7 +4,48 @@
     <meta charset="UTF-8">
     <title>Your Badges</title>
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* Optional: better-looking badges */
+        #badgeShelf {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: #1e0133;
+            border: 2px solid #6a1bff;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #e0d4ff;
+        }
+
+        .badge.shame {
+            border-color: #ff3b3b;
+            color: #ff8a8a;
+            background: #300000;
+        }
+
+        #noBadges {
+            text-align: center;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+
+        #backLink {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
+
 <body>
 
 <div id="topBar">
@@ -15,17 +56,31 @@
     <div class="card">
         <h2>BADGES</h2>
         <div id="badgeShelf"></div>
+        <div id="noBadges" style="display:none;">No badges yet — go earn some!</div>
     </div>
 </div>
 
 <script>
 function loadBadges() {
     const shelf = document.getElementById("badgeShelf");
+    const empty = document.getElementById("noBadges");
+
     const badges = JSON.parse(localStorage.getItem("badges") || "[]");
+
+    if (badges.length === 0) {
+        empty.style.display = "block";
+        return;
+    }
 
     badges.forEach(b => {
         const div = document.createElement("div");
         div.className = "badge";
+
+        // If badge name contains the word "shame" → make it red
+        if (b.toLowerCase().includes("shame")) {
+            div.classList.add("shame");
+        }
+
         div.textContent = b;
         shelf.appendChild(div);
     });

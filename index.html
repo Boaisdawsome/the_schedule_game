@@ -3,22 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <title>The Schedule Game</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
 
-<!-- 🔐 LOGIN CHECK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    const sb = window.supabase.createClient(
-        'https://vvbwyetqiqpccfdsjqle.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2Ynd5ZXRxaXFwY2NmZHNqcWxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3OTg4OTcsImV4cCI6MjA4MDM3NDg5N30.-YbxkZ6-eG1HUTutXhgKcR-y9YL486wqwEP96QgR-7c'
-    );
-
-    sb.auth.getUser().then(({ data }) => {
-        if (!data.user) {
-            window.location.href = "/login.html";
+    // Local save loading only
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof loadLocalSave === "function") {
+            loadLocalSave();
         }
     });
 </script>
@@ -40,7 +34,6 @@
 
 <div class="container">
 
-
 <!-- ========================= TASK MAKER ========================= -->
 <div class="card">
     <h2>MAKE A TASK</h2>
@@ -53,7 +46,6 @@
     <h3>Your Tasks</h3>
     <div id="taskList"></div>
 </div>
-
 
 <!-- ========================= QUEST MAKER ========================= -->
 <div class="card">
@@ -74,7 +66,6 @@
     <h3>Quests</h3>
     <div id="questDisplay"></div>
 </div>
-
 
 <!-- ========================= LIFE STORE ========================= -->
 <div class="card">
@@ -120,11 +111,7 @@
 </div>
 
 </div> <!-- end container -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        loadCloudAndLocal(); 
-    });
-</script>
-<script src="game.js"></script>
+
+<script src="./game.js"></script>
 </body>
 </html>
