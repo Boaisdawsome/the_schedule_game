@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <style>
+        body {
+            background: #0d001f;
+            color: white;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 14px 26px;
+            background: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>The Schedule Game</h1>
+    <button id="googleBtn">Sign in with Google</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // 🔥 YOUR REAL SUPABASE PROJECT
+        const SUPABASE_URL = "https://vvbwyetqiqpccfdsjqle.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2Ynd5ZXRxaXFwY2NmZHNqcWxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3OTg4OTcsImV4cCI6MjA4MDM3NDg5N30.-YbxkZ6-eG1HUTutXhgKcR-y9YL486wqwEP96QgR-7c";
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        document.getElementById("googleBtn").onclick = async () => {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: "https://theschedulegame.netlify.app/login.html"
+                }
+            });
+
+            if (error) {
+                alert("Login error: " + error.message);
+            }
+        };
+
+        // 🔥 If user already logged in, send to game
+        supabaseClient.auth.getUser().then(({ data }) => {
+            if (data.user) {
+                window.location.href = "/index.html";
+            }
+        });
+    </script>
+
+</body>
+</html>
