@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Badges</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="topBar">
+    <a href="index.html" id="backLink">← Back to Game</a>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2>BADGES</h2>
+        <div id="badgeShelf"></div>
+    </div>
+</div>
+
+<script>
+function loadBadges() {
+    const shelf = document.getElementById("badgeShelf");
+    const badges = JSON.parse(localStorage.getItem("badges") || "[]");
+
+    badges.forEach(b => {
+        const div = document.createElement("div");
+        div.className = "badge";
+        div.textContent = b;
+        shelf.appendChild(div);
+    });
+}
+
+loadBadges();
+</script>
+
+</body>
+</html>

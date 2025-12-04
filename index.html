@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>The Schedule Game</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- 🔐 LOGIN CHECK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const sb = window.supabase.createClient(
+        'https://vvbwyetqiqpccfdsjqle.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2Ynd5ZXRxaXFwY2NmZHNqcWxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3OTg4OTcsImV4cCI6MjA4MDM3NDg5N30.-YbxkZ6-eG1HUTutXhgKcR-y9YL486wqwEP96QgR-7c'
+    );
+
+    sb.auth.getUser().then(({ data }) => {
+        if (!data.user) {
+            window.location.href = "/login.html";
+        }
+    });
+</script>
+
+<!-- ========================= TOP BAR ========================= -->
+<div id="topBar">
+    <div class="statBox">
+        <div>POINTS</div>
+        <div id="points">0</div>
+    </div>
+
+    <div class="statBox">
+        <div>ACTION MONEY</div>
+        <div id="money">0</div>
+    </div>
+
+    <a id="badgeLink" href="badges.html">Badges →</a>
+</div>
+
+<div class="container">
+
+
+<!-- ========================= TASK MAKER ========================= -->
+<div class="card">
+    <h2>MAKE A TASK</h2>
+
+    <input id="taskName" placeholder="Task name" />
+    <input id="taskPoints" placeholder="Points" type="number" />
+
+    <button onclick="addTask()">Add Task</button>
+
+    <h3>Your Tasks</h3>
+    <div id="taskList"></div>
+</div>
+
+
+<!-- ========================= QUEST MAKER ========================= -->
+<div class="card">
+    <h2>MAKE A QUEST</h2>
+
+    <input id="questName" placeholder="Quest name" />
+
+    <button onclick="startQuestSelection()">Start Selecting Tasks</button>
+    <button id="finishQuestBtn" style="display:none;" onclick="finishQuestSelection()">
+        Finish Quest
+    </button>
+
+    <br><br>
+
+    <input id="questRewardPoints" placeholder="Reward: Points" type="number" />
+    <input id="questRewardMoney" placeholder="Reward: Money" type="number" />
+
+    <h3>Quests</h3>
+    <div id="questDisplay"></div>
+</div>
+
+
+<!-- ========================= LIFE STORE ========================= -->
+<div class="card">
+    <h2>LIFE STORE</h2>
+
+    <input id="storeItemName" placeholder="Item name (ex: iPad 10 minutes)" />
+    <input id="storeItemCost" placeholder="Cost in points" type="number" />
+    <button onclick="addStoreItem()">Add Store Item</button>
+
+    <h3>Store Items</h3>
+    <div id="storeList"></div>
+</div>
+
+<!-- ========================= ADJUST POINTS & MONEY ========================= -->
+<div class="card">
+    <h2>ADJUST POINTS & MONEY</h2>
+
+    <div>
+        <input id="removePointsInput" type="number" placeholder="Points to remove" />
+        <button onclick="removePoints(document.getElementById('removePointsInput').value)">
+            Remove Points
+        </button>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <input id="removeMoneyInput" type="number" placeholder="Money to remove" />
+        <button onclick="removeMoney(document.getElementById('removeMoneyInput').value)">
+            Remove Money
+        </button>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <button onclick="resetPointsMoney()">
+            Reset Points & Money (0)
+        </button>
+    </div>
+</div>
+
+<!-- ========================= INVENTORY ========================= -->
+<div class="card">
+    <h2>INVENTORY</h2>
+    <div id="inventoryList"></div>
+</div>
+
+</div> <!-- end container -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        loadCloudAndLocal(); 
+    });
+</script>
+<script src="game.js"></script>
+</body>
+</html>
